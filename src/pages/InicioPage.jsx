@@ -4,7 +4,12 @@ import { v4 } from "uuid";
 import Title from "../components/Title";
 import { useEffect, useState } from "react";
 
+import { GiHamburgerMenu } from "react-icons/gi";
+import Navbar from "../components/Navbar";
+import "../styles.css";
 function InicioPage() {
+  const [showNav, setShowNav] = useState(false);
+
   const [tasks, setTasks] = useState(
     JSON.parse(localStorage.getItem("tasks")) || [],
   );
@@ -40,16 +45,21 @@ function InicioPage() {
     };
     setTasks([...tasks, newTask]);
   }
+
   return (
-    <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
-      <div className="w-[500px] space-y-4">
-        <Title>Gerenciador de Tarefas</Title>
-        <AddTask onAddTaskSubmit={onAddTaskSubmit} />
-        <Tasks
-          tasks={tasks}
-          onTaskClick={onTaskClick}
-          onDeleteTaskClick={onDeleteTaskClick}
-        />
+    <div>
+      <Navbar show={showNav} />
+      <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
+        <div className="w-[500px] space-y-4">
+          <GiHamburgerMenu onClick={() => setShowNav(!showNav)} />
+          <Title>Gerenciador de Tarefas</Title>
+          <AddTask onAddTaskSubmit={onAddTaskSubmit} />
+          <Tasks
+            tasks={tasks}
+            onTaskClick={onTaskClick}
+            onDeleteTaskClick={onDeleteTaskClick}
+          />
+        </div>
       </div>
     </div>
   );
